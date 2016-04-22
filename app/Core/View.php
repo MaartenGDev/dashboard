@@ -1,16 +1,30 @@
 <?php
-
 namespace App\Core;
-
-
 class View
 {
     public function __construct($sViewName,$data = array())
     {
         $aViewName = explode('.', $sViewName);
-        $sFilePath = count($aViewName) == 2 ? 'resources/Views/' .  $aViewName[0] . '/' . $aViewName[1] . '.php' : 'resources/Views/' . $aViewName[0] . '.php';   
-        $sCurrentViewPath = Config::$sBaseUrl. $sFilePath;
-        file_exists($sCurrentViewPath) ? include_once($sCurrentViewPath) : throw new \Exception('Incorrect View or incorrect baseUrl in config file.');
+        if (count($aViewName) == 2) {
+            $sCurrentViewPath = $_SERVER['DOCUMENT_ROOT'] . Config::$sBaseUrl. 'resources/views/' . $aViewName[0] . '/' . $aViewName[1] . '.php';
+            if (file_exists($sCurrentViewPath)) {
+                include_once($sCurrentViewPath);
+                return true;
+            }else{
+                if(file_exists($_SERVER['DOCUMENT_ROOT'] . Config::$sBaseUrl. 'resources/views/errors/index.php')){
+                    new View('errors.index',array('errorName' => 'Error 404 Not Found'));
+                }else{
+                    throw new \Exception('Incorrect path in config file.');
+                }
+            }
+        }else{
+            $sCurrentViewPath = $_SERVER['DOCUMENT_ROOT'] . Config::$sBaseUrl. 'resources/views/' . $aViewName[0] . '.php';
+            if (file_exists($sCurrentViewPath)) {
+                include_once($sCurrentViewPath);
+                return true;
+            }else{
+                return false;
+            }
+        }
     }
-
 }
