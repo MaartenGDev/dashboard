@@ -48,6 +48,7 @@ class Route
             $sRequestURI = implode('', $aRequestArgs);
         }
 
+
         if (($sRouterURI == $sRequestURI) && $sRequestMethod == $_SERVER['REQUEST_METHOD']) {
             try {
 
