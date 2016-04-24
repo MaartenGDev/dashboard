@@ -3,17 +3,22 @@
 namespace App\Models;
 
 
+use App\Exceptions\StorageException;
+
 class Model
 {
-    public function __set($sKey,$sValue){
-        $this->$sKey = $sValue;
+    protected $aFields;
+
+    public function __construct($aFields){
+        if(array_keys($aFields) === $this->fillable){
+            $this->aFields = $aFields;
+        }else{
+            throw new StorageException('Mass Assignment Attack Detected!');
+        }
+
     }
     public function save(){
         $oQuery = new QueryBuilder();
-        $aResultList = array();
-        foreach(array_keys(get_object_vars($this)) as $sFieldName){
-            $aResultList[$sFieldName] = $this->$sFieldName;
-        }
-        $oQuery->insert($aResultList)->to(strtolower(str_replace('App\\Models\\','',get_class($this))) . 's')->result();
+        $oQuery->insert($this->aFields)->to(strtolower(str_replace('App\\Models\\','',get_class($this))) . 's')->result();
     }
 }

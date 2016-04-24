@@ -2,17 +2,16 @@
 namespace App\Http;
 
 use App\Core\Config;
-
 use \Exception;
 
 class Route
 {
 
     public static function __callStatic ( string $sName , array $aArgs ){
-          return self::handleRequest($aArgs[0], $aArgs[1], $sName);
+          return self::handleRequest($aArgs[0], $aArgs[1], $sName,$aArgs[2]);
     }
 
-    public static function handleRequest($sRouterURI, $sAction, $sRequestMethod)
+    public static function handleRequest($sRouterURI, $sAction, $sRequestMethod,Request $request)
     {
         if (Router::$bFoundRouter) {
             return false;
@@ -54,9 +53,9 @@ class Route
                 Router::$bFoundRouter = true;
 
                 if (count($aArguments) > 0) {
-                    return ($oCurrentObject->$sAction($aArguments));
+                    return ($oCurrentObject->$sAction($request,$aArguments));
                 } else {
-                    return ($oCurrentObject->$sAction(new Request()));
+                    return ($oCurrentObject->$sAction($request));
                 }
 
             } catch (Exception $e) {

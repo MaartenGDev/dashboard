@@ -1,7 +1,8 @@
 <?php
-use App\Http\Router;
+use App\Core\Kernel;
+use App\Http\Request;
 require_once 'vendor/autoload.php';
-session_start();
-new Router();
+$request = new Request();
+new Kernel($request->Capture());
 
 

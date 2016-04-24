@@ -8,6 +8,7 @@ use App\Models\Note;
 use App\Models\QueryBuilder;
 use App\Models\Redirect;
 use App\Models\Validator;
+use App\Http\Request;
 
 class NoteController extends Controller
 {
@@ -26,12 +27,7 @@ class NoteController extends Controller
             Flash::make(Flash::FLASH_ERROR,$oValidator);
             return new Redirect(Redirect::REDIRECT,'notes/add');
         }
-
-        $oNote = new Note($request->all());
-        $oNote->name = $_POST['name'];
-        $oNote->email = $_POST['email'];
-        $oNote->website = $_POST['website'];
-        $oNote->message = $_POST['message'];
+        $oNote = new Note($request->all);
         $oNote->save();
 
         Flash::make(Flash::FLASH_SUCCESS,array('Item has successfully been created'));
@@ -40,7 +36,8 @@ class NoteController extends Controller
     public function showForm(){
         return new View('note.add');
     }
-    public function listNotes(){
+    public function listNotes(Request $request){
+
         $oNotes = new QueryBuilder();
         $aNotes = $oNotes->select()->from('notes')->result();
 
