@@ -8,23 +8,16 @@ use \Exception;
 class Route
 {
 
-    public function GET($sRoute, $sAction)
-    {
-        return $this->handleRequest($sRoute, $sAction, 'GET');
+    public static function __callStatic ( string $sName , array $aArgs ){
+          return self::handleRequest($aArgs[0], $aArgs[1], $sName);
     }
 
-    public function POST($sRoute, $sAction)
-    {
-        return $this->handleRequest($sRoute, $sAction, 'POST');
-    }
-
-    public function handleRequest($sRouterURI, $sAction, $sRequestMethod)
+    public static function handleRequest($sRouterURI, $sAction, $sRequestMethod)
     {
         if (Router::$bFoundRouter) {
             return false;
         }
         $aArguments = array();
-
         $sRequestURI = substr($_SERVER['REQUEST_URI'], strlen(Config::$sBaseUrl));
 
         if($sRequestURI == ''){
@@ -63,7 +56,7 @@ class Route
                 if (count($aArguments) > 0) {
                     return ($oCurrentObject->$sAction($aArguments));
                 } else {
-                    return ($oCurrentObject->$sAction());
+                    return ($oCurrentObject->$sAction(new Request()));
                 }
 
             } catch (Exception $e) {

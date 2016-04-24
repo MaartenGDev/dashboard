@@ -9,9 +9,9 @@ use App\Models\QueryBuilder;
 use App\Models\Redirect;
 use App\Models\Validator;
 
-class NoteController
+class NoteController extends Controller
 {
-    public function addNote()
+    public function addNote(Request $request)
     {
 
         $oValidator = Validator::make($_POST,
@@ -27,7 +27,7 @@ class NoteController
             return new Redirect(Redirect::REDIRECT,'notes/add');
         }
 
-        $oNote = new Note();
+        $oNote = new Note($request->all());
         $oNote->name = $_POST['name'];
         $oNote->email = $_POST['email'];
         $oNote->website = $_POST['website'];

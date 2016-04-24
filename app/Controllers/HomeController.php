@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Core\View;
 use App\Models\Note;
 
-class HomeController
+class HomeController extends Controller
 {
     public function index($data = array())
     {
