@@ -6,9 +6,9 @@ use App\Http\Router;
 
 class Kernel{
 
-	public function __construct(Request $request){
+	public function __construct(){
 		session_start();
-		new Router($request);
+		new Router();
 	}
 
 }

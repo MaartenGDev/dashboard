@@ -2,20 +2,19 @@
 namespace App\Http;
 
 use App\Core\Config;
+use App\Services\Container;
 use \Exception;
 
 class Route
 {
+    private $methodParameters = array();
 
-    public static function __callStatic ( string $sName , array $aArgs ){
-          return self::handleRequest($aArgs[0], $aArgs[1], $sName,$aArgs[2]);
-    }
-
-    public static function handleRequest($sRouterURI, $sAction, $sRequestMethod,Request $request)
+    public function handleRequest($sRouterURI, $sAction, $sRequestMethod)
     {
         if (Router::$bFoundRouter) {
             return false;
         }
+
         $aArguments = array();
         $sRequestURI = substr($_SERVER['REQUEST_URI'], strlen(Config::$sBaseUrl));
 
@@ -47,23 +46,27 @@ class Route
                 list($sController, $sAction) = explode('@', $sAction);
                 $sControllerPath = 'App\Controllers\\' . $sController;
 
+                $reflector = new \ReflectionClass('App\Controllers\\' . $sController);
+                
+                $reflector->getNamespaceName();
+                foreach($reflector->getMethod($sAction)->getParameters() as $parameter){
+                    array_push($this->methodParameters,Container::get($parameter->getClass()->name));
 
-                $oCurrentObject = new $sControllerPath();
-
-                Router::$bFoundRouter = true;
-
-                if (count($aArguments) > 0) {
-                    return ($oCurrentObject->$sAction($request,$aArguments));
-                } else {
-                    return ($oCurrentObject->$sAction($request));
                 }
 
+                $oCurrentObject = new $sControllerPath();
+                Router::$bFoundRouter = true;
+
+                if (count($aArguments) > 0) array_push($this->methodParameters,$aArguments);
+                return call_user_func_array(array($oCurrentObject,$sAction),$this->methodParameters);
+
             } catch (Exception $e) {
-                throw new Exception('2 arguments required');
+                var_dump($e->getMessage());
             }
         } else {
             return false;
         }
+        return false;
     }
 
 }

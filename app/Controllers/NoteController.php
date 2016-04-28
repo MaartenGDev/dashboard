@@ -12,10 +12,14 @@ use App\Http\Request;
 
 class NoteController extends Controller
 {
+    public function __construct()
+    {
+        return 'oi';
+    }
+
     public function addNote(Request $request)
     {
-
-        $oValidator = Validator::make($_POST,
+        $oValidator = Validator::make($request->all(),
             array(
                 'name' => 'min:2|max:50|alpha',
                 'email' => 'min:2|max:50|email',
@@ -23,21 +27,25 @@ class NoteController extends Controller
                 'message' => 'min:2|max:150|alpha',
             )
         );
-        if($oValidator !== true){
-            Flash::make(Flash::FLASH_ERROR,$oValidator);
-            return new Redirect(Redirect::REDIRECT,'notes/add');
+        if($oValidator->fails()){         
+            $redirect = new Redirect('notes/add'); 
+            $redirect->withInput($request);
+            $redirect->withErrors($request,$oValidator->all());
+            $redirect->send();
         }
-        $oNote = new Note($request->all);
+        $oNote = new Note($request->all());
         $oNote->save();
 
         Flash::make(Flash::FLASH_SUCCESS,array('Item has successfully been created'));
         return new Redirect(Redirect::REDIRECT,'notes');
     }
+
     public function showForm(){
         return new View('note.add');
     }
-    public function listNotes(Request $request){
-
+    
+    public function listNotes(Request $request, Validator $validator){
+var_dump($request);
         $oNotes = new QueryBuilder();
         $aNotes = $oNotes->select()->from('notes')->result();
 

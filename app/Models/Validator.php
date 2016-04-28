@@ -5,6 +5,8 @@ namespace App\Models;
 class Validator
 {
     private static $aValidatorErrors = array();
+
+
     public static function make($aData, $aRules)
     {
         foreach ($aRules as $sFieldValue => $sRules) {
@@ -45,10 +47,12 @@ class Validator
                 }
             }
         }
-        if (count(self::$aValidatorErrors) == 0) {
-            return true;
-        } else {
-            return self::$aValidatorErrors;
-        }
+       return new Validator();
+    }
+    public function fails(){
+        return count(self::$aValidatorErrors > 0);
+    }
+    public function all(){
+        return self::$aValidatorErrors;
     }
 }

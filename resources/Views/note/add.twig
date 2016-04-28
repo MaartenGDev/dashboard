@@ -1,5 +1,7 @@
-<?php include_once $_SERVER['DOCUMENT_ROOT'] . \App\Core\Config::$sBaseUrl . 'resources/views/layouts/header.php'; ?>
+<?php
+include_once __DIR__. '/../resources/views/layouts/header.php'; ?>
 
+{{ 'test' }}
 
 <h1>Guest Book</h1>
 <form action="<?php echo \App\Core\Config::$sBaseUrl . 'notes/add'?>" method="POST">

@@ -4,20 +4,27 @@ namespace App\Models;
 
 
 use App\Core\Config;
+use App\Http\Request;
 
 class Redirect
 {
     const REDIRECT = 'redirect';
     const HTTP = 'http';
-    public function __construct($sType,$sLocation = '')
+
+    protected $location;
+    public function __construct($location)
     {
-        switch($sType){
-            case 'redirect':
-                header('Location: ' . Config::$sBaseUrl . $sLocation);
-                break;
-            case 'http':
-                header("HTTP/1.0 404 Not Found");
-                break;
-        }
+        $this->location = $location;
+    }
+    public function withInput(Request $request){
+
+    return $request;
+    }
+    public function withErrors($request,$aValidatorErrors){
+        $request->errors = $aValidatorErrors;
+        return $request;
+    }
+    public function send(){
+        header('Location: ' . Config::$sBaseUrl . $this->location);        
     }
 }

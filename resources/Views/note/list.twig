@@ -1,6 +1,7 @@
-<?php include_once $_SERVER['DOCUMENT_ROOT'] . \App\Core\Config::$sBaseUrl . 'resources/views/layouts/header.php'; ?>
+<?php
+include_once __DIR__. '/../../views/layouts/header.php'; ?>
 
-
+{{ status }}
 <h1>Guest Book</h1>
 <div class="component">
     <?php
@@ -15,6 +16,6 @@
     ?>
 </div>
 
-<?php include_once $_SERVER['DOCUMENT_ROOT'] . \App\Core\Config::$sBaseUrl . 'resources/views/layouts/footer.php'; ?>
+<?php include_once __DIR__.  '/../../views/layouts/footer.php'; ?>
 
 

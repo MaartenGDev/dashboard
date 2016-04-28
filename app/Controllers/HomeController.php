@@ -9,7 +9,7 @@ use App\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index($data = array())
+    public function index(Request $request,$data = array())
     {
         $test = new Note();
         $test->name = 'Example';

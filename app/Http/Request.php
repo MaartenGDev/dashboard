@@ -1,16 +1,11 @@
 <?php
 namespace App\Http;
 
-class Request{
-	public static $request;
-
-	public function Capture(){
-
-		$request = new Request();
-		$request->fullUrl ='oi/oi';
-		$request->all = $_POST;
-		self::$request = $request;
-		return $request;
-	}
-
+class Request
+{
+    private $request;
+    protected $errors = array('oi','oi2');
+    public function get($key){
+        return $this->request->$key;
+    }
 }
