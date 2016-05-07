@@ -1,21 +1,18 @@
-<?php
-include_once __DIR__. '/../../views/layouts/header.php'; ?>
-
-{{ status }}
-<h1>Guest Book</h1>
+{%  extends '/layouts/base.twig' %}
+{%  block title %}
+    {{ parent() }}
+    <p>List of notes</p>
+{% endblock %}
+{% block content %}
 <div class="component">
-    <?php
-    foreach ($data['notes'] as $aNote) {
-        echo '<div class="article">';
-        echo '<h1>' . $aNote->name . '</h1>';
-        echo '<a href="mailto:' . $aNote->email . '">' . $aNote->email . '</a><br>';
-        echo '<a href="' . $aNote->website . '">' . $aNote->website . '</a><br>';
-        echo '<p>' . $aNote->message . '</p>';
-        echo '</div>';
-    }
-    ?>
+    {%  for note in notes %}
+        <div class="article">
+        <h1>{{ note.name }}</h1>
+        <a href="mailto:{{ note.email }}">{{ note.email }}</a><br>
+        <a href="{{ note.website }}">{{ note.website }}</a><br>
+        <p>{{ note.message }}</p>
+            <a href="/note/{{ note.id }}">View</a>
+        </div>
+    {%  endfor %}
 </div>
-
-<?php include_once __DIR__.  '/../../views/layouts/footer.php'; ?>
-
-
+{%  endblock %}

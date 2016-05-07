@@ -6,25 +6,11 @@ namespace App\Models;
 use App\Core\Config;
 use App\Http\Request;
 
-class Redirect
-{
-    const REDIRECT = 'redirect';
-    const HTTP = 'http';
+class Redirect {
+    protected $errors;
 
-    protected $location;
-    public function __construct($location)
-    {
-        $this->location = $location;
-    }
-    public function withInput(Request $request){
+    public function __construct($location) {
+        header('Location: ' . Config::$sBaseUrl . $location);
 
-    return $request;
-    }
-    public function withErrors($request,$aValidatorErrors){
-        $request->errors = $aValidatorErrors;
-        return $request;
-    }
-    public function send(){
-        header('Location: ' . Config::$sBaseUrl . $this->location);        
     }
 }

@@ -1,0 +1,15 @@
+{%  extends '/layouts/base.twig' %}
+
+{%  block title %}
+    {{ parent() }}
+    <p>Profile for {{ note.name }}</p>
+{% endblock %}
+{%  block content %}
+    <p>Website</p>
+    <a href="{{ note.website}}">{{ note.website}}</a>
+    <p>Email</p>
+    <a href="{{ note.email}}">{{ note.email}}</a>
+    <p>
+        {{ note.message }}
+    </p>
+{%  endblock %}

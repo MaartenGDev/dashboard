@@ -1,21 +1,19 @@
-<?php
-include_once __DIR__. '/../resources/views/layouts/header.php'; ?>
+{%  extends '/layouts/base.twig' %}
 
-{{ 'test' }}
-
-<h1>Guest Book</h1>
-<form action="<?php echo \App\Core\Config::$sBaseUrl . 'notes/add'?>" method="POST">
+{% block content %}
+<form action="{{ base ~ 'notes/add'}}" method="POST">
     <p>Name:</p>
-    <input type="text" name="name">
+
+    {{ form.input('name') }}
     <p>Email:</p>
-    <input type="text" name="email">
+    {{ form.input('email') }}
     <p>Homepage</p>
-    <input type="text" name="website">
+    {{ form.input('website') }}
     <p>Message</p>
-    <textarea name="message"></textarea><br>
+    {{ form.textarea('message') }}
+    <br>
     <button class="flat-btn" type="submit">Save</button>
 </form>
+{% endblock %}
 
-
-<?php include_once $_SERVER['DOCUMENT_ROOT'] . \App\Core\Config::$sBaseUrl  . 'resources/views/layouts/footer.php'; ?>
 

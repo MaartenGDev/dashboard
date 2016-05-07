@@ -103,7 +103,6 @@ class QueryBuilder
             foreach ($this->aBindParams as $sFieldKey => &$sFieldValue) {
                 $oQuery->bindParam(':' . $sFieldKey, $sFieldValue);
             }
-
             if ($oQuery->execute()) {
                 switch ($this->sType) {
                     case 'SELECT':

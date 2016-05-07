@@ -5,30 +5,47 @@ use App\Core\Config;
 use App\Services\Container;
 use \Exception;
 
-class Route
-{
-    private $methodParameters = array();
+class Route {
 
-    public function handleRequest($sRouterURI, $sAction, $sRequestMethod)
+    private static $methodParameters = array();
+
+    public static function get($sRouterURI, $sAction)
     {
-        if (Router::$bFoundRouter) {
+        self::handleRequest($sRouterURI, $sAction, 'GET');
+    }
+
+    public static function post($sRouterURI, $sAction)
+    {
+        self::handleRequest($sRouterURI, $sAction, 'POST');
+    }
+
+    public static function handleRequest($sRouterURI, $sAction, $sRequestMethod)
+    {
+        if (Router::$bFoundRouter)
+        {
             return false;
         }
 
         $aArguments = array();
         $sRequestURI = substr($_SERVER['REQUEST_URI'], strlen(Config::$sBaseUrl));
 
-        if($sRequestURI == ''){
-          $sRequestURI = '/';
+        if ($sRequestURI == '')
+        {
+            $sRequestURI = '/';
         }
 
         $aRouterArgs = explode('/', $sRouterURI);
+
+
+        $sRouterURI = substr($sRouterURI, 0, 1) == '/' ? substr($sRouterURI, 1) : $sRouterURI;
+
         $aRequestArgs = explode('/', $sRequestURI);
 
         preg_match_all('({[A-Za-z]{1,}})', $sRouterURI, $aMatches);
-        if (count($aMatches) > 0 && (count($aRouterArgs) == count($aRequestArgs))) {
-
-            foreach ($aMatches[0] as $sMatch) {
+        if (count($aMatches) > 0 && (count($aRouterArgs) == count($aRequestArgs)))
+        {
+            foreach ($aMatches[0] as $sMatch)
+            {
                 $iCurrentIndex = array_search($sMatch, $aRouterArgs);
                 $aArguments[str_replace(array('{', '}'), '', $aRouterArgs[$iCurrentIndex])] = $aRequestArgs[$iCurrentIndex];
                 unset($aRouterArgs[$iCurrentIndex]);
@@ -40,32 +57,46 @@ class Route
         }
 
 
-        if (($sRouterURI == $sRequestURI) && $sRequestMethod == $_SERVER['REQUEST_METHOD']) {
-            try {
+        if (($sRouterURI == $sRequestURI) && $sRequestMethod == $_SERVER['REQUEST_METHOD'])
+        {
+            try
+            {
 
                 list($sController, $sAction) = explode('@', $sAction);
                 $sControllerPath = 'App\Controllers\\' . $sController;
 
                 $reflector = new \ReflectionClass('App\Controllers\\' . $sController);
-                
-                $reflector->getNamespaceName();
-                foreach($reflector->getMethod($sAction)->getParameters() as $parameter){
-                    array_push($this->methodParameters,Container::get($parameter->getClass()->name));
 
+                foreach($aArguments as $modelName => $parameter){
+                    $currentModel = 'App\Models\\'. $modelName;
+
+                    if(class_exists($currentModel)){
+                        Container::set($currentModel, $currentModel::find($parameter));
+                    }
+                }
+
+                $reflector->getNamespaceName();
+                foreach ($reflector->getMethod($sAction)->getParameters() as $parameter)
+                {
+                    array_push(self::$methodParameters, Container::get($parameter->getClass()->name));
                 }
 
                 $oCurrentObject = new $sControllerPath();
                 Router::$bFoundRouter = true;
 
-                if (count($aArguments) > 0) array_push($this->methodParameters,$aArguments);
-                return call_user_func_array(array($oCurrentObject,$sAction),$this->methodParameters);
+                if (count($aArguments) > 0) array_push(self::$methodParameters, $aArguments);
 
-            } catch (Exception $e) {
+                return call_user_func_array(array($oCurrentObject, $sAction), self::$methodParameters);
+
+            } catch (Exception $e)
+            {
                 var_dump($e->getMessage());
             }
-        } else {
+        } else
+        {
             return false;
         }
+
         return false;
     }
 

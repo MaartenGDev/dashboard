@@ -9,15 +9,8 @@ use App\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index(Request $request,$data = array())
+    public function index()
     {
-        $test = new Note();
-        $test->name = 'Example';
-        $test->email = 'test@example.com';
-        $test->website = 'Website Test';
-        $test->message = 'Hello World';
-        $test->save();
-
-        return new View('home.index', $data);
+        return new View('welcome');
     }
 }

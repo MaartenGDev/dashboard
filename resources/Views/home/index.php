@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'] . \App\Core\Config::$sBaseUrl .'resources/views/layouts/header.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . \App\Core\Config::$sBaseUrl .'resources/views/layouts/base.twig';
 ?>
 
 

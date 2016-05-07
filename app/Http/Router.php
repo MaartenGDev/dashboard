@@ -9,10 +9,11 @@ class Router
 
     public function __construct()
     {
-        $route = new Route();
-        $route->handleRequest('notes', 'NoteController@listNotes','GET');
-        $route->handleRequest('notes/add', 'NoteController@showForm','GET');
-        $route->handleRequest('notes/add', 'NoteController@addNote','POST');
+        Route::get('/', 'HomeController@index');
+        Route::get('notes', 'NoteController@listNotes');
+        Route::get('notes/add', 'NoteController@showForm');
+        Route::get('note/{note}', 'NoteController@getNote');
+        Route::post('notes/add', 'NoteController@addNote');
 
         if(!self::$bFoundRouter){
            new View('errors.index',array('errorName' => 'Error 404 Not Found'));

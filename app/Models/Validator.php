@@ -50,7 +50,7 @@ class Validator
        return new Validator();
     }
     public function fails(){
-        return count(self::$aValidatorErrors > 0);
+        return count(self::$aValidatorErrors) > 0;
     }
     public function all(){
         return self::$aValidatorErrors;
