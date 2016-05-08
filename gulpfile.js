@@ -10,10 +10,10 @@ gulp.task('help',$.taskListing);
 gulp.task('default',['help']);
 
 gulp.task('clean-styles', function() {
-    return clean(config.publicPath + 'css/*.css');
+    return clean(config.publicPath + 'css/app.css');
 });
 gulp.task('clean-js', function() {
-    return clean(config.publicPath + 'js/*.js');
+    return clean(config.publicPath + 'js/app.js');
 });
 gulp.task('styles', ['clean-styles'],function () {
     log('Compiling Less -> CSS.');

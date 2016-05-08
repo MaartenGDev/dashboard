@@ -78,13 +78,16 @@ class Route {
                 $reflector->getNamespaceName();
                 foreach ($reflector->getMethod($sAction)->getParameters() as $parameter)
                 {
-                    array_push(self::$methodParameters, Container::get($parameter->getClass()->name));
+                    // Check  if the argument is a class not a variable like: $name or $id
+                    if(!is_null($parameter->getClass()) && class_exists($parameter->getClass()->name)){
+                        array_push(self::$methodParameters, Container::get($parameter->getClass()->name));
+                    }else{
+                        array_push(self::$methodParameters,$aArguments[$parameter->name]);
+                    }
                 }
-
+                // Create the object.
                 $oCurrentObject = new $sControllerPath();
                 Router::$bFoundRouter = true;
-
-                if (count($aArguments) > 0) array_push(self::$methodParameters, $aArguments);
 
                 return call_user_func_array(array($oCurrentObject, $sAction), self::$methodParameters);
 

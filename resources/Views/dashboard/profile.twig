@@ -1,0 +1,110 @@
+{% extends '/layouts/base.twig' %}
+
+{% block title %}
+    {{ parent() }}
+    <p>Profile for {{ name }}</p>
+{% endblock %}
+{% block content %}
+    <div class="container">
+    <p>Stats for: {{ name }}</p>
+
+    <div class="row expanded">
+        <div class="small-12 medium-6 large-3 columns">
+            <div class="md-chart-card md-small-chart-card">
+                <div class="md-chart chart-mw-kd">
+                </div>
+                <div class="chart-details">
+                    <h3>2562</h3>
+                    <p>MegaWalls K/D</p>
+                </div>
+            </div>
+        </div>
+        <div class="small-12 medium-6 large-3 columns">
+            <div class="md-chart-card md-small-chart-card">
+                <div class="md-chart chart-sg-kd">
+                </div>
+                <div class="chart-details">
+                    <h3>2562</h3>
+                    <p>MegaWalls K/D</p>
+                </div>
+            </div>
+        </div>
+        <div class="small-12 medium-6 large-3 columns">
+            <div class="md-chart-card md-small-chart-card">
+                <div class="md-chart chart-sw-kd">
+                </div>
+                <div class="chart-details">
+                    <h3>2562</h3>
+                    <p>MegaWalls K/D</p>
+                </div>
+            </div>
+        </div>
+        <div class="small-12 medium-6 large-3 columns">
+            <div class="md-chart-card md-small-chart-card">
+                <div class="md-chart chart-ws-kd">
+                </div>
+                <div class="chart-details">
+                    <h3>2562</h3>
+                    <p>MegaWalls K/D</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row expanded">
+        {# SECOND chart row #}
+        <div class="small-12 medium-12 large-4 columns">
+            <div class="md-chart-card">
+                <div class="md-graph graph-mw-coins">
+                </div>
+                <div class="chart-details">
+                    <h3>2562</h3>
+                    <p>MW Coins</p></div>
+
+            </div>
+        </div>
+        <div class="small-12 medium-12 large-4 columns">
+            <div class="md-chart-card">
+                <div class="md-graph graph-sw-coins">
+                </div>
+                <div class="chart-details">
+                    <h3>2562</h3>
+                    <p>MW Coins</p></div>
+
+            </div>
+        </div>
+        <div class="small-12 medium-12 large-4 columns">
+            <div class="md-chart-card">
+                <div class="md-graph graph-sg-coins">
+                </div>
+                <div class="chart-details">
+                    <h3>2562</h3>
+                    <p>MW Coins</p></div>
+
+            </div>
+        </div>
+    </div>
+    {# THIRD chart row #}
+    <div class="row expanded">
+
+        <div class="small-12 medium-6 large-6 columns">
+            <div class="md-chart-card">
+                <div class="chart">
+                </div>
+                <div class="chart-details">
+                    <h3>2562</h3>
+                    <p>MW Coins</p></div>
+
+            </div>
+        </div>
+        <div class="small-12 medium-6 large-6 columns">
+            <div class="md-chart-card">
+                <div class="chart">
+                </div>
+                <div class="chart-details">
+                    <h3>2562</h3>
+                    <p>MW Coins</p></div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

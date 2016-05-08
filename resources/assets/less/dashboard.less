@@ -1,0 +1,64 @@
+@gray: #F5F5F5;
+@white: #ffffff;
+body {
+  margin: 0;
+}
+
+/*
+ Main APP css
+*/
+.app {
+  background-color: @gray;
+}
+
+/* each chart has a row */
+.row {
+  margin-top: 15px;
+}
+
+.container {
+  width: 95%;
+  margin: 0 auto;
+}
+
+/* 4 top charts */
+.md-chart-card {
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid rgba(54, 64, 74, 0.08);
+  background-color: @white;
+  border-radius: 5px;
+  h3 {
+    margin: 0;
+    padding: 0;
+  }
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Charting CSS */
+.md-small-chart-card {
+  .md-chart {
+    display: inline-block;
+    width: 130px;
+    height: 130px;
+  }
+
+  .chart-details {
+    display: inline-block;
+    float: right;
+    padding-top: 20px;
+    padding-right: 50px;
+    h3{
+      color: #00b19d;
+    }
+    p{
+      color: #98a6ad;
+    }
+  }
+}
+.md-graph{
+  height: 250px;
+}

@@ -9,11 +9,8 @@ class Router
 
     public function __construct()
     {
-        Route::get('/', 'HomeController@index');
-        Route::get('notes', 'NoteController@listNotes');
-        Route::get('notes/add', 'NoteController@showForm');
-        Route::get('note/{note}', 'NoteController@getNote');
-        Route::post('notes/add', 'NoteController@addNote');
+        Route::get('/', 'DashboardController@index');
+        Route::get('profile/{name}', 'DashboardController@showProfile');
 
         if(!self::$bFoundRouter){
            new View('errors.index',array('errorName' => 'Error 404 Not Found'));
