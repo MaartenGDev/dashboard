@@ -1,7 +1,11 @@
 @gray: #F5F5F5;
 @white: #ffffff;
+@mutedGray: #98a6ad;
+@darkGray: #505458;
+
 body {
   margin: 0;
+  font-family: 'Roboto', sans-serif;
 }
 
 /*
@@ -10,7 +14,10 @@ body {
 .app {
   background-color: @gray;
 }
-
+/* Hidden */
+.hidden{
+  display: none;
+}
 /* each chart has a row */
 .row {
   margin-top: 15px;
@@ -22,19 +29,37 @@ body {
 }
 
 /* 4 top charts */
-.md-chart-card {
+.md-card {
   padding: 10px;
   margin-top: 5px;
   border: 1px solid rgba(54, 64, 74, 0.08);
   background-color: @white;
   border-radius: 5px;
-  h3 {
-    margin: 0;
-    padding: 0;
+
+  .chart-details {
+    h4 {
+      margin: 5px 0 0 0;
+      padding: 0;
+      font-weight: 500;
+      font-size: 18px;
+    }
+    h5 {
+      margin: 5px 0 0 0;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    text-align: center;
   }
-  p {
+  .chart-title {
     margin: 0;
     padding: 0;
+    font-weight: normal;
+  }
+  .desc-text{
+    font-size: 14px;
+    margin: 0;
+    padding-top: 10px;
+    margin-top: 70px;
   }
 }
 
@@ -51,14 +76,51 @@ body {
     float: right;
     padding-top: 20px;
     padding-right: 50px;
-    h3{
+    h3 {
       color: #00b19d;
     }
-    p{
+    p {
       color: #98a6ad;
     }
   }
 }
-.md-graph{
+
+.md-graph {
   height: 250px;
+}
+
+/* General Colors */
+.text-gray {
+  color: @mutedGray;
+}
+
+.text-dark {
+  color: @darkGray;
+}
+/* Collapse menu's */
+ul.collapsible {
+  border-top: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  margin: 0;
+  padding: 0;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+
+  li {
+    list-style-type: none;
+  }
+
+  .collapsible-header{
+    color: rgba(0,0,0,0.87);
+    padding: 0px 15px;
+    border-bottom: 1px solid #ddd;
+  }
+  .collapsible-body{
+    background-color: #FCFCFC;
+    border-bottom: 1px solid #ddd;
+    color: rgba(0,0,0,0.71);
+    ul{
+      padding: 10px;
+    }
+  }
 }
